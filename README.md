@@ -23,4 +23,33 @@ if (($machinePath -split ';') -notcontains 'C:\kubectl') {
 }
 
 6. Close and reopen PowerShell, then verify >>>> kubectl version --client
+----------------------------------------------------------------------------------------------------
+Install Kind on Windows using PowerShell:
+
+1. Download Kind from GitHub >>>> curl.exe -L --fail --retry 3 `
+  -o "$HOME\Downloads\kind.exe" `
+  "https://github.com/kubernetes-sigs/kind/releases/download/v0.33.0/kind-windows-amd64"
+
+2. Move Kind to your tools directory >>>> New-Item -Path "C:\kubectl" -ItemType Directory -Force
+
+Move-Item "$HOME\Downloads\kind.exe" "C:\kubectl\kind.exe" -Force
+
+3. Add C:\kubectl to your user PATH >>>> $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+
+if (($userPath -split ';') -notcontains 'C:\kubectl') {
+    $newPath = (@($userPath, 'C:\kubectl') | Where-Object { $_ }) -join ';'
+    [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+}
+
+$env:Path += ";C:\kubectl"
+
+4. Verify the installation >>>> kind version
+
+5. Create a local Kubernetes cluster (Ensure Docker Desktop is running) >>>> kind create cluster --name devops-lab
+
+6. Verify the cluster >>>> kubectl get nodes
+kubectl get pods -A
+
+
+
 
