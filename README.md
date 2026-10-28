@@ -49,6 +49,27 @@ $env:Path += ";C:\kubectl"
 
 6. Verify the cluster >>>> kubectl get nodes
 kubectl get pods -A
+-----------------------------------------------------------------------------------------------------------------------
+## Important commands :
+Yaml file for making a cluster >>>>
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+
+Create the cluster:
+kind create cluster --name (Put the cluster name u want) --config (Name of your custom cluster yaml file)
+
+Verify the nodes:
+kubectl get nodes
+
+Delete the cluster:
+kind delete cluster --name (Put the cluster name u want to delete)
+
+
+
 
 
 
